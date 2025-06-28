@@ -90,7 +90,7 @@ docker-lab/
 ### Environment Variables ของ Frontend
 
 ```env
-REACT_APP_API_URL=http://localhost:4000
+REACT_APP_API_URL: http://localhost:4000
 ```
 
 ### Environment Variables ของ Backend
