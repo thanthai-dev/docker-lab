@@ -12,39 +12,16 @@
 
 ### ข้อกำหนดเบื้องต้น
 
-* Docker และ Docker Compose ติดตั้งในเครื่อง
+* ติดตั้ง Docker หรือ Podman หรือ Rancher ในเครื่อง
 * Port 3000, 4000, 5432 ว่าง
 
 ### การติดตั้งและรัน
 
 1. **Clone โปรเจค**
 
-2. **สร้างโครงสร้างไฟล์ตามที่กำหนด**
+2. **แก้ไข dockerfile, docker-compose ให้สมบูรณ์**
 
-```
-docker-lab/
-├── frontend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── .env
-│   ├── public/
-│   │   └── index.html
-│   └── src/
-│       ├── App.js
-│       ├── index.js
-│       └── App.css
-├── backend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── .env
-│   └── server.js
-├── docker-compose.yml
-└── README.md
-```
-
-3. **แก้ไข dockerfile, docker-compose ให้สมบูรณ์**
-
-4. **สร้างและรันคอนเทนเนอร์**
+3. **สร้างและรันคอนเทนเนอร์**
 
 ```bash
 # สร้างและรันทันหมด
@@ -54,13 +31,33 @@ docker-compose up --build
 docker-compose up -d --build
 ```
 
-5. **เปิดแอป**
+4. **เปิดแอป**
 
    * Frontend: [http://localhost:3000](http://localhost:3000)
    * Backend API: [http://localhost:4000](http://localhost:4000)
    * Database: localhost:5432
 
 ## 📁 โครงสร้างและคำอธิบาย
+
+### โครงสร้างไฟล์
+```
+docker-lab/
+├── frontend/
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── public/
+│   │   └── index.html
+│   └── src/
+│       ├── App.js
+│       ├── index.js
+│       └── App.css
+├── backend/
+│   ├── Dockerfile
+│   ├── package.json
+│   └── server.js
+├── docker-compose.yml
+└── README.md
+```
 
 ### Frontend (React)
 
@@ -87,20 +84,23 @@ docker-compose up -d --build
 * **Database**: `tododb`
 * **User**: `postgres`
 * **Password**: `password`
-* **Volume**: `postgres_data` สำหรับ persistent storage
 
 ## 🔧 การใช้ Environment Variables
 
-### ./frontend/.env
+### Environment Variables ของ Frontend
 
 ```env
 REACT_APP_API_URL=http://localhost:4000
 ```
 
-### ./backend/.env
+### Environment Variables ของ Backend
 
 ```env
 PORT=4000
+```
+
+### Environment Variables ของ Database (PostgreSQL)
+```env
 DB_HOST=database
 DB_PORT=5432
 DB_NAME=tododb
