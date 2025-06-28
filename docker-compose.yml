@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # Database Service
+  database:
+    image: postgres:15-alpine
+    container_name: todo-postgres
+    environment:
+      POSTGRES_DB: tododb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    environment:
+      - PORT=4000
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=tododb
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: todo-frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
