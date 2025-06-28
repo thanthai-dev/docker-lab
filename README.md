@@ -96,16 +96,19 @@ REACT_APP_API_URL=http://localhost:4000
 ### Environment Variables ของ Backend
 
 ```env
-PORT=4000
+PORT: 4000
+DB_USER: postgres
+DB_NAME: tododb
+DB_PASSWORD: password
+DB_HOST: database
+DB_PORT: 5432
 ```
 
 ### Environment Variables ของ Database (PostgreSQL)
 ```env
-DB_HOST=database
-DB_PORT=5432
-DB_NAME=tododb
-DB_USER=postgres
-DB_PASSWORD=password
+POSTGRES_DB: tododb
+POSTGRES_USER: postgres
+POSTGRES_PASSWORD: password
 ```
 
 ## 🛠️ คำสั่งที่สำคัญ
