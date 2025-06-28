@@ -11,9 +11,6 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
 
   # Backend Service
   backend:
@@ -21,13 +18,15 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: todo-backend
-    env_file:
-      - ./backend/.env
+    environment:
+      PORT: 4000
+      DB_USER: postgres
+      DB_HOST: database
+      DB_NAME: tododb
+      DB_PASSWORD: password
+      DB_PORT: 5432
     ports:
       - "4000:4000"
-    depends_on:
-      - database
-    restart: unless-stopped
 
   # Frontend Service
   frontend:
@@ -35,13 +34,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: todo-frontend
-    env_file:
-      - ./frontend/.env
+    environment:
+      REACT_APP_API_URL: http://localhost:4000
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
-    restart: unless-stopped
-
-volumes:
-  postgres_data:
